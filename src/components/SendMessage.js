@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { auth, db } from '../firebase';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
-const SendMessage = () => {
+const SendMessage = ({ scroll }) => {
   const [message, setMessage] = useState('');
 
   const sendMessage = async (event) => {
@@ -20,6 +21,7 @@ const SendMessage = () => {
       uid,
     });
     setMessage('');
+    scroll.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -39,6 +41,11 @@ const SendMessage = () => {
       <button type="submit">Send</button>
     </form>
   );
+};
+
+SendMessage.propTypes = {
+  scroll: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    .isRequired,
 };
 
 export default SendMessage;
