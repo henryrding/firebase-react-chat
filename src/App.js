@@ -7,7 +7,6 @@ import { auth } from './firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 function App() {
-  // eslint-disable-next-line no-unused-vars
   const [user] = useAuthState(auth);
 
   return (
