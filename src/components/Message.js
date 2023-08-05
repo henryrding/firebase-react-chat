@@ -6,6 +6,15 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 const Message = ({ message }) => {
   const [user] = useAuthState(auth);
 
+  const convertTime = (createdAt) => {
+    const fireBaseTime = new Date(
+      createdAt.seconds * 1000 + createdAt.nanoseconds / 1000000
+    );
+    const date = fireBaseTime.toDateString();
+    const atTime = fireBaseTime.toLocaleTimeString();
+    return { date, atTime };
+  };
+
   return (
     <div className={`chat-bubble ${message.uid === user.uid ? 'right' : ''}`}>
       <img
@@ -16,6 +25,8 @@ const Message = ({ message }) => {
       <div className="chat-bubble__right">
         <p className="user-name">{message.name}</p>
         <p className="user-message">{message.text}</p>
+        <p className="message-time">{convertTime(message.createdAt).atTime}</p>
+        <p className="message-time">{convertTime(message.createdAt).date}</p>
       </div>
     </div>
   );
